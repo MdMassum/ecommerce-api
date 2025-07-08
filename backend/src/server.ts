@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongoConfig";
 import errorMiddleware from './middleware/error'
 import authRouter from './routes/auth.route'
+import productRouter from './routes/product.route'
 
 let server: ReturnType<typeof app.listen>;
 
@@ -45,8 +46,9 @@ app.get('/',(req:Request, res:Response)=>{
         "message":"server up and running"
     })
 })
-// auth route -->
+// routes -->
 app.use('/api/v1/auth',authRouter);
+app.use('/api/v1/products',productRouter);
 
 app.use(errorMiddleware)  // error middleware
 
