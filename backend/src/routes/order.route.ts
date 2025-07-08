@@ -12,7 +12,7 @@ router.post("/new",authenticate, createOrder)
 router.get("/me",authenticate, getMyOrders)
 
 // get all orders (Admin) -->
-router.get("/me",authenticate, authorizeRoles("admin"),getAllOrders)
+router.get("/",authenticate, authorizeRoles("admin"),getAllOrders)
 
 // update order status (Admin) -->
 router.put("/:id",authenticate, updateOrderStatus)
