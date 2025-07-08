@@ -1,7 +1,8 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
+import { IProduct } from "./product.model";
 
 export interface ICartItem extends Document {
-  product: Types.ObjectId;
+  product: Types.ObjectId | IProduct;   // allow both ObjectId and populated object
   quantity: number;
 }
 
