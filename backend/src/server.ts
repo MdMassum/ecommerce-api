@@ -9,6 +9,8 @@ import authRouter from './routes/auth.route'
 import productRouter from './routes/product.route'
 import cartRouter from './routes/cart.route'
 import orderRouter from './routes/order.route'
+import rateLimit from 'express-rate-limit'
+import helmet from 'helmet'
 
 let server: ReturnType<typeof app.listen>;
 
@@ -41,6 +43,15 @@ app.use(cors({
     credentials: true
 }))
 
+// rate limit
+app.use(rateLimit({
+  windowMs: 3 * 60 * 1000, // 5 minutes
+  max: 100,
+  message: "Too many attempts from this IP, please try again later.",
+  })); // Rate limiting
+
+app.use(helmet());
+
 
 // health check route -->
 app.get('/',(req:Request, res:Response)=>{
@@ -52,7 +63,7 @@ app.get('/',(req:Request, res:Response)=>{
 app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/products',productRouter);
 app.use('/api/v1/carts',cartRouter);
-app.use('/api/v1/orders',cartRouter);
+app.use('/api/v1/orders',orderRouter);
 
 app.use(errorMiddleware)  // error middleware
 
